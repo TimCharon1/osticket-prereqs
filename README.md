@@ -3,10 +3,7 @@
 </p>
 
 <h1>osTicket - Prerequisites and Installation</h1>
-This tutorial outlines the prerequisites and installation of the open-source help desk ticketing system osTicket.<br />
 
-
-<h2>Video Demonstration</h2>
 
 
 
@@ -22,42 +19,175 @@ This tutorial outlines the prerequisites and installation of the open-source hel
 
 <h2>List of Prerequisites</h2>
 
-- Item 1
-- Item 2
-- Item 3
-- Item 4
-- Item 5
+
+
+### ✅ Prerequisites for osTicket Installation
+
+1. **Create an Azure Virtual Machine**
+
+   * OS: Windows 10
+   * Size: 4 vCPUs
+   * Name: `osticket-vm`
+   * Username: `labuser`
+   * Password: `************`
+
+2. **Connect to the VM**
+
+   * Use **Remote Desktop** to log into `osticket-vm` with the credentials above.
+
+3. **Download Installation Files**
+
+   * Inside the VM, download and unzip `osTicket-Installation-Files.zip` onto the desktop.
+   * This will create a folder called `osTicket-Installation-Files` that contains all required tools and packages.
+
+4. **Install IIS (Internet Information Services)**
+
+   * Open **Windows Features**, enable **IIS**, and ensure the following is selected:
+
+     * `World Wide Web Services` → `Application Development Features` → ✅ `CGI`
+
+5. **Confirm IIS is Running**
+
+   * Open a browser in the VM and navigate to `http://localhost` to verify that the IIS welcome page appears.
+
+
+
 
 <h2>Installation Steps</h2>
 
+![image](https://github.com/user-attachments/assets/2da2fd98-4a52-4fe2-a7d7-3ceb5d2e4152)
+
 <p>
-<img src="https://i.imgur.com/chyaFyl.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+
+
+### ⚙️ osTicket Manual Environment Setup (Windows + IIS)
+
+To manually deploy **osTicket** on a Windows system using **IIS**, I performed the following steps:
+
+1. **Installed PHP Manager for IIS**
+   From `PHPManagerForIIS_V1.5.0.msi` to simplify PHP configuration in IIS.
+
+2. **Installed IIS Rewrite Module**
+   Using `rewrite_amd64_en-US.msi` to enable clean URL support for osTicket.
+
+3. **Set Up PHP Directory**
+   Created `C:\PHP` and extracted `php-7.3.8-nts-Win32-VC15-x86.zip` into it.
+
+4. **Installed Visual C++ Redistributable**
+   Ran `VC_redist.x86.exe` to support PHP runtime.
+
+5. **Installed MySQL 5.5.62**
+   Used `mysql-5.5.62-win32.msi` → Typical Setup → Standard Configuration via the MySQL Wizard.
+
+
+
+
 </p>
+
+
+![image](https://github.com/user-attachments/assets/eb39140a-b165-468c-843d-6bcecdd9e45c)
+
+
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+
+### 🛠️ Enabling Required PHP Extensions for osTicket
+
+After installing PHP and launching osTicket in the browser, I received a warning indicating that some required PHP extensions were not enabled. To resolve this, I used **PHP Manager for IIS** to activate the necessary extensions:
+
+1. Opened **IIS Manager**, navigated to:
+   `Sites → Default Web Site → osTicket`
+
+2. Double-clicked **PHP Manager** to access PHP configuration tools.
+
+3. Selected **“Enable or disable an extension”** from the available options.
+
+4. Manually enabled the following extensions:
+
+   * `php_imap.dll` – Supports email fetching via IMAP.
+   * `php_intl.dll` – Provides internationalization support.
+   * `php_opcache.dll` – Improves PHP performance through opcode caching.
+
+5. Refreshed the osTicket site in the browser to confirm that all required extensions were now enabled and the warning message was resolved.
+
+This step was critical to ensuring full feature compatibility with osTicket, particularly email ticketing and localization features.
+
+
+
 </p>
 <br />
 
+![image](https://github.com/user-attachments/assets/eaae4e86-7d3b-45c6-9a88-bad02d4c955b)
+
+
 <p>
-<img src="https://i.imgur.com/chyaFyl.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+
+---
+
+### 🧾 Final osTicket Configuration & Database Setup
+
+#### 🔧 Rename Config File
+
+Renamed the sample config file:
+
+```
+From: C:\inetpub\wwwroot\osTicket\include\ost-sampleconfig.php  
+To:   C:\inetpub\wwwroot\osTicket\include\ost-config.php
+```
+
+#### 🔐 Set Permissions
+
+* Disabled inheritance on `ost-config.php`
+* Removed existing permissions
+* Granted **Everyone** full control
+
+#### 🌐 Complete Browser Setup
+
+* Opened osTicket in the browser
+* Clicked **Continue**
+* Named the helpdesk and set a default support email
+
+#### 🗃️ Create MySQL Database (HeidiSQL)
+
+* Installed **HeidiSQL**
+* Connected using `root/root`
+* Created a new database: `osTicket`
+
+
+
 </p>
 <br />
 
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-</p>
-<br />
+![image](https://github.com/user-attachments/assets/0a485657-8a92-48ae-9978-8265592afa34)
+
+![image](https://github.com/user-attachments/assets/849fba59-9eb0-4aa7-b1f9-6ac24452d4f3)
+
 
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+
+### 🚀 Finalizing osTicket Installation
+
+* Continued the setup in the browser
+* Entered the following MySQL details:
+
+  * **Database:** `osTicket`
+  * **Username:** `root`
+  * **Password:** `***`
+* Clicked **“Install Now!”** to complete installation
+
+✅ If successful, the system confirms installation with no errors.
+
+#### 🔑 Access URLs:
+
+* **Admin Panel (Staff Login):**
+  `http://localhost/osTicket/scp/login.php`
+
+* **End User Support Portal:**
+  `http://localhost/osTicket/`
+
+
+
 </p>
 <br />
