@@ -23,32 +23,39 @@
 
 ### ✅ Prerequisites for osTicket Installation
 
-1. **Create an Azure Virtual Machine**
 
-   * OS: Windows 10
-   * Size: 4 vCPUs
-   * Name: `osticket-vm`
-   * Username: `Windows`
-   * Password: `************`
+1. **Create a Windows 10 Azure VM**
 
-2. **Connect to the VM**
+   * 4 vCPUs, Name: `osticket-vm`
+   * Username: `labuser`, Password: `osTicketPassword1!`
 
-   * Use **Remote Desktop** to log into `osticket-vm` with the credentials above.
+2. **Connect via Remote Desktop**
 
-3. **Download Installation Files**
+   * Log into the VM using the credentials above.
 
-   * Inside the VM, download and unzip `osTicket-Installation-Files.zip` onto the desktop.
-   * This will create a folder called `osTicket-Installation-Files` that contains all required tools and packages.
+3. **Download & Unzip Files**
 
-4. **Install IIS (Internet Information Services)**
+   * Extract `osTicket-Installation-Files.zip` to the desktop inside the VM.
 
-   * Open **Windows Features**, enable **IIS**, and ensure the following is selected:
+4. **Install IIS with CGI Enabled**
 
-     * `World Wide Web Services` → `Application Development Features` → ✅ `CGI`
+   * Enable IIS via Windows Features → Application Development Features → ✅ CGI.
 
-5. **Confirm IIS is Running**
+5. **Verify IIS is Running**
 
-   * Open a browser in the VM and navigate to `http://localhost` to verify that the IIS welcome page appears.
+   * Visit `http://localhost` in a browser inside the VM.
+
+6. **Access osTicket Panels**
+
+   * **Admin/Agent Login:** `http://localhost/osTicket/scp/login.php`
+   * **End User Portal:** `http://localhost/osTicket`
+
+7. **Know the Difference**
+
+   * **Agent Panel:** For staff managing tickets.
+   * **Admin Panel:** For system settings (admins only).
+
+
 
 
 
