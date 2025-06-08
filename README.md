@@ -60,31 +60,41 @@
 
 
 
-<h2>Installation Steps</h2>
+<h2>Configuration Steps</h2>
 
-![image](https://github.com/user-attachments/assets/2da2fd98-4a52-4fe2-a7d7-3ceb5d2e4152)
+![image](https://github.com/user-attachments/assets/ba0a9b02-3855-4793-9821-e946e6e27d95)
+![image](https://github.com/user-attachments/assets/36c7b3e1-dcca-46c0-83e3-abdadba4bf6e)
+![image](https://github.com/user-attachments/assets/bc7fde34-39b1-4448-8573-f10960ea6790)
+
+
+
 
 <p>
 
 
-### ⚙️ osTicket Manual Environment Setup (Windows + IIS)
 
-To manually deploy **osTicket** on a Windows system using **IIS**, I performed the following steps:
 
-1. **Installed PHP Manager for IIS**
-   From `PHPManagerForIIS_V1.5.0.msi` to simplify PHP configuration in IIS.
+### 🛡️ Configure Roles, Departments, and Teams
 
-2. **Installed IIS Rewrite Module**
-   Using `rewrite_amd64_en-US.msi` to enable clean URL support for osTicket.
+1. **Set Up Roles**
+   *Purpose:* Group agents by permission level.
 
-3. **Set Up PHP Directory**
-   Created `C:\PHP` and extracted `php-7.3.8-nts-Win32-VC15-x86.zip` into it.
+   * Navigate to: `Admin Panel → Agents → Roles`
+   * Example: `Supreme Admin`
 
-4. **Installed Visual C++ Redistributable**
-   Ran `VC_redist.x86.exe` to support PHP runtime.
+2. **Create Departments**
+   *Purpose:* Control ticket visibility by function.
 
-5. **Installed MySQL 5.5.62**
-   Used `mysql-5.5.62-win32.msi` → Typical Setup → Standard Configuration via the MySQL Wizard.
+   * Navigate to: `Admin Panel → Agents → Departments`
+   * Example: `SysAdmins` (separate from Help Desk or Networking)
+
+3. **Build Teams**
+   *Purpose:* Group agents across departments for specific workflows.
+
+   * Navigate to: `Admin Panel → Agents → Teams`
+   * Example: `Online Banking` team (includes agents from multiple departments)
+
+
 
 
 
@@ -92,39 +102,32 @@ To manually deploy **osTicket** on a Windows system using **IIS**, I performed t
 </p>
 
 
-![image](https://github.com/user-attachments/assets/eb39140a-b165-468c-843d-6bcecdd9e45c)
+![image](https://github.com/user-attachments/assets/7efd2689-4f94-4e5f-ba7f-6f41316e8ec7)
+
 
 
 <p>
 
 
-### 🛠️ Enabling Required PHP Extensions for osTicket
 
-After installing PHP and launching osTicket in the browser, I received a warning indicating that some required PHP extensions were not enabled. To resolve this, I used **PHP Manager for IIS** to activate the necessary extensions:
+### ✉️ Control Ticket Submission Settings
 
-1. Opened **IIS Manager**, navigated to:
-   `Sites → Default Web Site → osTicket`
+* Go to: `Admin Panel → Settings → User Settings`
+* **Allow Anyone to Create Tickets:**
 
-2. Double-clicked **PHP Manager** to access PHP configuration tools.
+  * **Uncheck**: *Require registration and login to create tickets*
+  * This enables **unregistered users** to submit tickets through the support portal.
 
-3. Selected **“Enable or disable an extension”** from the available options.
+> ✅ Useful for public-facing help desks that don’t require user accounts.
 
-4. Manually enabled the following extensions:
-
-   * `php_imap.dll` – Supports email fetching via IMAP.
-   * `php_intl.dll` – Provides internationalization support.
-   * `php_opcache.dll` – Improves PHP performance through opcode caching.
-
-5. Refreshed the osTicket site in the browser to confirm that all required extensions were now enabled and the warning message was resolved.
-
-This step was critical to ensuring full feature compatibility with osTicket, particularly email ticketing and localization features.
 
 
 
 </p>
 <br />
 
-![image](https://github.com/user-attachments/assets/eaae4e86-7d3b-45c6-9a88-bad02d4c955b)
+![image](https://github.com/user-attachments/assets/64e0f630-20bf-4acd-9d97-ace60375e313)
+
 
 
 <p>
@@ -132,67 +135,69 @@ This step was critical to ensuring full feature compatibility with osTicket, par
 
 ---
 
-### 🧾 Final osTicket Configuration & Database Setup
+### 👥 Add Support Agents
 
-#### 🔧 Rename Config File
+* Navigate to: `Admin Panel → Agents → Add New`
+* Create agents and assign departments:
 
-Renamed the sample config file:
+  * **Jane** → Department: `SysAdmins`
+  * **John** → Department: `Support`
 
-```
-From: C:\inetpub\wwwroot\osTicket\include\ost-sampleconfig.php  
-To:   C:\inetpub\wwwroot\osTicket\include\ost-config.php
-```
+> Agents are the staff members who respond to tickets based on their assigned department and role.
 
-#### 🔐 Set Permissions
 
-* Disabled inheritance on `ost-config.php`
-* Removed existing permissions
-* Granted **Everyone** full control
 
-#### 🌐 Complete Browser Setup
-
-* Opened osTicket in the browser
-* Clicked **Continue**
-* Named the helpdesk and set a default support email
-
-#### 🗃️ Create MySQL Database (HeidiSQL)
-
-* Installed **HeidiSQL**
-* Connected using `root/root`
-* Created a new database: `osTicket`
 
 
 
 </p>
 <br />
 
-![image](https://github.com/user-attachments/assets/0a485657-8a92-48ae-9978-8265592afa34)
+![image](https://github.com/user-attachments/assets/74fea544-4918-4d04-bf71-cfd32c81a44d)
 
-![image](https://github.com/user-attachments/assets/849fba59-9eb0-4aa7-b1f9-6ac24452d4f3)
+
+![image](https://github.com/user-attachments/assets/5b83a878-9102-4848-8d45-fe34a04bcb5d)
+
 
 
 <p>
 
 
-### 🚀 Finalizing osTicket Installation
 
-* Continued the setup in the browser
-* Entered the following MySQL details:
+---
 
-  * **Database:** `osTicket`
-  * **Username:** `root`
-  * **Password:** `***`
-* Clicked **“Install Now!”** to complete installation
+### ⏱️ Configure SLAs (Service Level Agreements)
 
-✅ If successful, the system confirms installation with no errors.
+* Go to: `Admin Panel → Manage → SLA`
+* Define response time expectations:
 
-#### 🔑 Access URLs:
+  * **Sev-A** → Grace: `1 hour`, Schedule: `24/7`
+  * **Sev-B** → Grace: `4 hours`, Schedule: `24/7`
+  * **Sev-C** → Grace: `8 hours`, Schedule: `Business Hours`
 
-* **Admin Panel (Staff Login):**
-  `http://localhost/osTicket/scp/login.php`
+> SLAs help prioritize ticket urgency and enforce response timelines.
 
-* **End User Support Portal:**
-  `http://localhost/osTicket/`
+
+![image](https://github.com/user-attachments/assets/f79cd2ac-7c2d-4b5f-9b31-43c3352368d8)
+
+
+
+---
+
+### 📝 Configure Help Topics
+
+* Navigate to: `Admin Panel → Manage → Help Topics`
+* Add common support categories to streamline ticket routing:
+
+  * **Business Critical Outage**
+  * **Personal Computer Issues**
+  * **Equipment Request**
+  * **Password Reset**
+  * **Other**
+
+> Help Topics guide users when submitting tickets and can trigger custom workflows or SLA assignments.
+
+
 
 
 
