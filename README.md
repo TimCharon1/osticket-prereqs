@@ -28,7 +28,7 @@
    * OS: Windows 10
    * Size: 4 vCPUs
    * Name: `osticket-vm`
-   * Username: `labuser`
+   * Username: `Windows`
    * Password: `************`
 
 2. **Connect to the VM**
